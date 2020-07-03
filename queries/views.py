@@ -12,7 +12,7 @@ def get_query(request):
         if form.is_valid():
             ip_address = request.META.get('REMOTE_ADDR')
             result = models.QueryResult.objects.get_or_create(user_ip=ip_address, phrase=request.POST['phrase'])
-            context = {'form': form, 'links': result.link_set.all()}
+            context = {'form': form, 'links': result.link_set.order_by('position').all()}
             return render(request, TEMPLATE_FILENAME, context)
 
     return render(request, TEMPLATE_FILENAME, {'form': forms.QueryForm()})

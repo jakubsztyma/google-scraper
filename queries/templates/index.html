@@ -7,7 +7,7 @@
 {% if links %}
     <ul>
     {% for link in links %}
-        <li>{{ link.url }}</li>
+        <li>{{link.position}} {{ link.url }}</li>
     {% endfor %}
     </ul>
 {% else %}

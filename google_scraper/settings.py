@@ -10,6 +10,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
+GOOGLE_KEY = os.environ.get('GOOGLE_KEY')
 DEBUG = os.environ.get('DEBUG')
 ALLOWED_HOSTS = list(filter(lambda s: len(s) > 0, map(str.strip, os.environ.get('ALLOWED_HOSTS', '').split(','))))
 
@@ -28,6 +29,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
 
     'google_scraper',
+    'queries',
 ]
 
 MIDDLEWARE = [
@@ -66,12 +68,18 @@ WSGI_APPLICATION = 'google_scraper.wsgi.application'
 
 DB_CONNECTION = json.loads(os.environ.get("DB_CONNECTION"))
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "HOST": DB_CONNECTION["host"],
-        "PORT": DB_CONNECTION["port"],
-    }
+    'default': dj_database_url.parse('sqlite:///db.sqlite3'),
 }
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": DB_CONNECTION["dbname"],
+#         "USER": DB_CONNECTION["username"],
+#         "PASSWORD": DB_CONNECTION["password"],
+#         "HOST": DB_CONNECTION["host"],
+#         "PORT": DB_CONNECTION["port"],
+#     }
+# }
 
 
 # Password validation

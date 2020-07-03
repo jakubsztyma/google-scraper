@@ -1,13 +1,26 @@
+import json
+import requests
+
 from django.core import validators as validators
 from django.db import models
+
+from google_scraper import settings
+
+SEARCH_URL = "https://www.googleapis.com/customsearch/v1?key={0}&gl=se&cr=se&googlehost=google.se&q={1}&alt=json"
 
 
 class QueryResultManager(models.Manager):
     def get_or_create(self, user_ip: str, phrase: str):
-        # TODO implement queries to google.com, filtering by user_ip
         result = self.filter(user_ip=user_ip, phrase=phrase).first()
         if result is None:
-            result = self.create(user_ip=user_ip, phrase=phrase, result_count=0)
+            response = requests.get(SEARCH_URL.format(settings.GOOGLE_KEY, phrase))
+            json_result = json.loads(response.content)
+            result_count = json_result['searchInformation']['totalResults']
+            urls = [item['link'] for item in json_result['items']]
+
+            result = self.create(user_ip=user_ip, phrase=phrase, result_count=result_count)
+            for position, url in enumerate(urls):
+                Link.objects.create(query_result=result, url=url, position=position)
         return result
 
 
