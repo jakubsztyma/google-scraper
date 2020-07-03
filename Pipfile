@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+Django = "~=2.2"
+djangorestframework = "~=3.10"
+dj-database-url = "0.5.0"
+
+[dev-packages]
+factory_boy = "==2.10.0"
+pytest = "==4.6.4"
+pytest-factoryboy = "==2.0.1"
+psycopg2 = "==2.8.5"
+pytest-django = "==3.1.2"
+django-rest-swagger = "2.2.0"
+
+[requires]
+python_version = "3.7"
