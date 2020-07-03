@@ -3,11 +3,12 @@ from django.db import models
 
 
 class QueryResultManager(models.Manager):
-    def get_or_create(self, phrase: str):
+    def get_or_create(self, user_ip: str, phrase: str):
         # TODO implement queries to google.com, filtering by user_ip
-        if self.filter(phrase=phrase).exists():
-            return self.get(phrase=phrase)
-        return self.create(user_ip='fake_ip', phrase=phrase, result_count=0)
+        result = self.filter(user_ip=user_ip, phrase=phrase).first()
+        if result is None:
+            result = self.create(user_ip=user_ip, phrase=phrase, result_count=0)
+        return result
 
 
 class QueryResult(models.Model):
