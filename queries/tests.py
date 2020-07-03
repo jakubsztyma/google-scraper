@@ -8,7 +8,7 @@ from . import factories
 pytestmark = pytest.mark.django_db
 
 
-class TestDummy:
+class Test:
     def test_dummy(self):
         pass
 
