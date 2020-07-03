@@ -1,0 +1,15 @@
+<form action="/queries/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+
+{% if links %}
+    <ul>
+    {% for link in links %}
+        <li>{{ link.url }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No results are available.</p>
+{% endif %}
