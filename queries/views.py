@@ -16,7 +16,7 @@ def get_query(request):
                 'form': form,
                 'result': result,
                 'links': result.link_set.order_by('position').all(),
-                'popular_words': result.popularword_set.all(),
+                'popular_words': result.popularword_set.order_by('position').all(),
             }
             return render(request, TEMPLATE_FILENAME, context)
 

@@ -11,6 +11,7 @@ class QueryResultFactory(factory.DjangoModelFactory):
     user_ip = factory.Faker("word")
     phrase = factory.Faker("sentence")
     result_count = fuzzy.FuzzyInteger(0, 1000)
+    created_at = factory.Faker("date")
 
 
 class LinkFactory(factory.DjangoModelFactory):

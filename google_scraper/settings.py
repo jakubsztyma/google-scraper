@@ -1,5 +1,7 @@
 import json
 import os
+from datetime import timedelta
+
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -147,3 +149,5 @@ SWAGGER_SETTINGS = {
 
 HASHID_FIELD_SALT = '9q#3t$5gs9ob682b@(6^fdv2kg*0ztr(3doa((w&kyq!d8rbt^'
 
+QUERY_RESULT_LIFE_TIME = timedelta(seconds=int(os.environ.get('QUERY_RESULT_LIFE_TIME_SECONDS')))
+SEARCH_URL = os.environ.get('SEARCH_URL')
