@@ -1,4 +1,6 @@
 import json
+from collections import Counter
+
 import requests
 
 from django.core import validators as validators
@@ -17,10 +19,15 @@ class QueryResultManager(models.Manager):
             json_result = json.loads(response.content)
             result_count = int(json_result['searchInformation']['totalResults'])
             urls = [item['link'] for item in json_result['items']]
+            text = ' '.join(item['title'] for item in json_result['items'])
+            popular_words = Counter(text.split()).most_common(10)
+            print(popular_words)
 
             result = self.create(user_ip=user_ip, phrase=phrase, result_count=result_count)
             for position, url in enumerate(urls):
                 Link.objects.create(query_result=result, url=url, position=position)
+            for word, _ in popular_words:
+                PopularWord.objects.create(query_result=result, word=word)
         return result
 
 
