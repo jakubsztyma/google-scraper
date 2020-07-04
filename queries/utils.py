@@ -12,10 +12,12 @@ class GoogleResult:
     urls: Generator
     popular_words: list
 
+def _get_response_from_google(phrase: str):
+    response = requests.get(settings.SEARCH_URL.format(settings.GOOGLE_KEY, phrase))
+    return json.loads(response.content)
 
 def get_response_from_google(phrase: str) -> GoogleResult:
-    response = requests.get(settings.SEARCH_URL.format(settings.GOOGLE_KEY, phrase))
-    json_result = json.loads(response.content)
+    json_result = _get_response_from_google(phrase)
     text = ' '.join(item['title'] for item in json_result['items'])
     tokens = (token.strip().lower() for token in text.split())
     words = (token for token in tokens if token.isalpha())

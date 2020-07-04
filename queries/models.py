@@ -1,8 +1,8 @@
+from django.conf import settings
 from django.core import validators as validators
 from django.db import models
 from django.utils import timezone
 
-from google_scraper import settings
 from queries import utils
 
 
