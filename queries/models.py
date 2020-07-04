@@ -15,7 +15,7 @@ class QueryResultManager(models.Manager):
         if result is None:
             response = requests.get(SEARCH_URL.format(settings.GOOGLE_KEY, phrase))
             json_result = json.loads(response.content)
-            result_count = json_result['searchInformation']['totalResults']
+            result_count = int(json_result['searchInformation']['totalResults'])
             urls = [item['link'] for item in json_result['items']]
 
             result = self.create(user_ip=user_ip, phrase=phrase, result_count=result_count)
