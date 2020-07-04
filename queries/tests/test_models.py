@@ -9,7 +9,7 @@ pytestmark = pytest.mark.django_db
 
 
 class TestQueryResult:
-    def test_get_or_create_new(self, mocker, get_request):
+    def test_get_or_create_new(self, mocker, faker, get_request):
         user_ip = 'abc'
         phrase = 'abc'
         total_results = 1000
