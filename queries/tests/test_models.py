@@ -4,6 +4,7 @@ import pytest
 from django.conf import settings
 from django.utils import timezone
 
+from .conftest import GOOGLE_SAMPLE_RESPONSE
 from .. import models, utils
 
 pytestmark = pytest.mark.django_db
@@ -20,6 +21,8 @@ class TestQueryResult:
         assert models.QueryResult.objects.count() == 1
         assert created.user_ip == user_ip
         assert created.phrase == phrase
+        assert created.link_set.count() == len(GOOGLE_SAMPLE_RESPONSE['items'])
+        assert created.popularword_set.count() == 10
 
     @pytest.mark.freeze_time
     def test_get_or_create_exists_valid(self, query_result_factory, get_response_from_google):

@@ -19,10 +19,14 @@ class QueryResultManager(models.Manager):
             response = utils.get_response_from_google(phrase)
 
             result = self.create(user_ip=user_ip, phrase=phrase, result_count=response.result_count)
-            for position, url in enumerate(response.urls):
-                Link.objects.create(query_result=result, url=url, position=position)
-            for word, position in response.popular_words:
-                PopularWord.objects.create(query_result=result, word=word, position=position)
+            Link.objects.bulk_create(
+                Link(query_result=result, url=url, position=position)
+                for position, url in enumerate(response.urls)
+            )
+            PopularWord.objects.bulk_create(
+                PopularWord(query_result=result, word=word, position=position)
+                for word, position in response.popular_words
+            )
         return result
 
 

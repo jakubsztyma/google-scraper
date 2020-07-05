@@ -18,12 +18,12 @@ def _get_response_from_google(phrase: str):
 
 def get_response_from_google(phrase: str) -> GoogleResult:
     json_result = _get_response_from_google(phrase)
-    text = ' '.join(item['title'] for item in json_result['items'])
+    text = ' '.join(item.get('title', '') for item in json_result['items'])
     tokens = (token.strip().lower() for token in text.split())
     words = (token for token in tokens if token.isalpha())
     return GoogleResult(
         result_count=int(json_result['searchInformation']['totalResults']),
-        urls=(item['link'] for item in json_result['items']),
+        urls=(item.get('link', '') for item in json_result['items']),
         popular_words=Counter(words).most_common(10),
     )
 
