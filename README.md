@@ -7,6 +7,7 @@ You also need to obtain a [google custom search](https://developers.google.com/c
 #### Before run
 Copy **.env.example** file to **.env** file \
 Assign your google custom search key to **GOOGLE_KEY** setting \
+Assign a random string to **SECRET_KEY** setting
 Create data volume for the app \
 `docker volume create google_scraper_data`
 

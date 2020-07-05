@@ -21,7 +21,9 @@ def _get_response_from_google(phrase: str):
 
 def _get_words(items):
     """Get the most common words from google results"""
-    text = ' '.join(item.get('title', '') for item in items)
+    titles = ' '.join(item.get('title', '') for item in items)
+    descriptions = ' '.join(item.get('snippet', '') for item in items)
+    text = f"{titles} {descriptions}"
     tokens = (token.strip('.,-_:;?!').lower() for token in text.split())
     words = (token for token in tokens if token.isalpha())
     return Counter(words).most_common(10)
