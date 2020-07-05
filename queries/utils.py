@@ -14,11 +14,13 @@ class GoogleResult:
 
 
 def _get_response_from_google(phrase: str):
+    """Get response from google search in form of python native objects"""
     response = requests.get(settings.SEARCH_URL.format(settings.GOOGLE_KEY, phrase))
     return json.loads(response.content)
 
 
 def _get_words(items):
+    """Get the most common words from google results"""
     text = ' '.join(item.get('title', '') for item in items)
     tokens = (token.strip('.,-_:;?!').lower() for token in text.split())
     words = (token for token in tokens if token.isalpha())
@@ -35,4 +37,5 @@ def get_response_from_google(phrase: str) -> GoogleResult:
 
 
 def normalize_phrase(phrase: str) -> str:
+    """Normalize the phrase so that similar phrases can be treated as the same phrase"""
     return phrase.lower()
