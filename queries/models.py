@@ -7,10 +7,11 @@ from queries import utils
 
 
 class QueryResultManager(models.Manager):
-    def get_or_create(self, user_ip: str, phrase: str):
+    def get_or_create(self, user_ip: str, user_browser: str, phrase: str):
         phrase = utils.normalize_phrase(phrase)
         result = self.filter(
             user_ip=user_ip,
+            user_browser=user_browser,
             phrase=phrase,
             created_at__gt=timezone.now() - settings.QUERY_RESULT_LIFE_TIME
         ).first()
@@ -18,7 +19,12 @@ class QueryResultManager(models.Manager):
         if result is None:
             response = utils.get_response_from_google(phrase)
 
-            result = self.create(user_ip=user_ip, phrase=phrase, result_count=response.result_count)
+            result = self.create(
+                user_ip=user_ip,
+                user_browser=user_browser,
+                phrase=phrase,
+                result_count=response.result_count
+            )
             Link.objects.bulk_create(
                 Link(query_result=result, url=url, position=position)
                 for position, url in enumerate(response.urls)
@@ -32,9 +38,10 @@ class QueryResultManager(models.Manager):
 
 class QueryResult(models.Model):
     user_ip = models.CharField(max_length=15, validators=[validators.validate_ipv4_address])
+    user_browser = models.CharField(max_length=100, default='')
     phrase = models.CharField(max_length=1000, null=False)
     result_count = models.PositiveIntegerField()
-    created_at = models.DateTimeField(editable=False, default=lambda: timezone.now())
+    created_at = models.DateTimeField(editable=False, default=timezone.now)
 
     objects = QueryResultManager()
 
