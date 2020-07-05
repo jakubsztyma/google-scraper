@@ -1,25 +1,44 @@
-<form action="/queries/" method="post">
+
+<style>
+    #query_input{
+        margin: 30px;
+    }
+    #result{
+        margin: 10px 30px 10px 30px;
+    }
+    label{
+        margin: 10px;
+    }
+    input{
+        margin: 10px;
+    }
+    p{
+        margin: 10px;
+    }
+</style>
+
+<form id="query_input" action="/queries/" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit">
 </form>
 
-<h2>{{result.result_count}} results</h2>
-{% if popular_words %}
+{% if result %}
+<div id="result">
+    <h2>Nuber of results: {{result.result_count}}</h2>
+    <h3>The most popular words:</h3>
     <ul>
     {% for word in popular_words %}
         <li>{{word.word}}</li>
     {% endfor %}
     </ul>
-{% else %}
-    <p>No results are available.</p>
-{% endif %}
-{% if links %}
+    <h3>Top results:</h3>
     <ul>
     {% for link in links %}
-        <li>{{link.position}} {{ link.url }}</li>
+        <li><a href="{{link.url}}">{{ link.url }}</a></li>
     {% endfor %}
     </ul>
+</div>
 {% else %}
     <p>No results are available.</p>
 {% endif %}

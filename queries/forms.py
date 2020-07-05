@@ -2,4 +2,4 @@ from django import forms
 
 
 class QueryForm(forms.Form):
-    phrase = forms.CharField(label='Query', max_length=1000)
+    phrase = forms.CharField(label='Provide your query:', max_length=1000)

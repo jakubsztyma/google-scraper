@@ -11,7 +11,7 @@ def get_query(request):
         form = forms.QueryForm(request.POST)
         if form.is_valid():
             ip_address = request.META.get('REMOTE_ADDR')
-            result = models.QueryResult.objects.get_or_create(user_ip=ip_address, phrase=request.POST['phrase'])
+            result = models.QueryResult.objects.get_or_create(user_ip=ip_address, phrase=form.cleaned_data['phrase'])
             context = {
                 'form': form,
                 'result': result,
