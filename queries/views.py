@@ -6,7 +6,7 @@ from . import models
 TEMPLATE_FILENAME = 'index.html'
 
 
-def get_query(request):
+def index(request):
     if request.method == 'POST':
         form = forms.QueryForm(request.POST)
         if form.is_valid():
@@ -15,8 +15,8 @@ def get_query(request):
             context = {
                 'form': form,
                 'result': result,
-                'links': result.link_set.order_by('position').all(),
-                'popular_words': result.popularword_set.order_by('position').all(),
+                'links': result.link_set.order_by('-position').all(),
+                'popular_words': result.popularword_set.order_by('-position').all(),
             }
             return render(request, TEMPLATE_FILENAME, context)
 
