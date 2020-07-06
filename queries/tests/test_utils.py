@@ -19,4 +19,3 @@ def test_get_words():
         ('omega', 1),
         ('pi', 1),
     ]
-

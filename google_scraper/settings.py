@@ -1,4 +1,3 @@
-import json
 import os
 from datetime import timedelta
 
@@ -7,14 +6,12 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = os.environ.get('DEBUG')
 ALLOWED_HOSTS = list(filter(lambda s: len(s) > 0, map(str.strip, os.environ.get('ALLOWED_HOSTS', '').split(','))))
-
 
 # Application definition
 
@@ -63,25 +60,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'google_scraper.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DB_CONNECTION = json.loads(os.environ.get("DB_CONNECTION"))
 DATABASES = {
     'default': dj_database_url.parse('sqlite:///db.sqlite3'),
 }
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": DB_CONNECTION["dbname"],
-#         "USER": DB_CONNECTION["username"],
-#         "PASSWORD": DB_CONNECTION["password"],
-#         "HOST": DB_CONNECTION["host"],
-#         "PORT": DB_CONNECTION["port"],
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -101,7 +85,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -114,7 +97,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/

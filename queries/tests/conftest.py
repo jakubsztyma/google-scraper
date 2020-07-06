@@ -1,9 +1,9 @@
 import random
 
 import pytest
+from faker import Faker
 from pytest_factoryboy import register
 from rest_framework.test import APIClient
-from faker import Faker
 
 from queries.tests import factories
 
@@ -15,6 +15,7 @@ GOOGLE_SAMPLE_RESPONSE = {
         for _ in range(20)
     ]
 }
+
 
 @pytest.fixture
 def api_client():

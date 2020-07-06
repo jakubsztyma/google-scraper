@@ -1,23 +1,26 @@
-
 <style>
-    #query_input{
+    #query_input {
         margin: 30px;
     }
-    #result{
+
+    #result {
         margin: 10px 30px 10px 30px;
     }
-    label{
+
+    label {
         margin: 10px;
     }
-    input{
+
+    input {
         margin: 10px;
     }
-    p{
+
+    p {
         margin: 10px;
     }
 </style>
 
-<form id="query_input" action="/queries/" method="post">
+<form action="/queries/" id="query_input" method="post">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit">
@@ -28,17 +31,17 @@
     <h2>Nuber of results: {{result.result_count}}</h2>
     <h3>The most popular words:</h3>
     <ul>
-    {% for word in popular_words %}
+        {% for word in popular_words %}
         <li>{{word.word}}</li>
-    {% endfor %}
+        {% endfor %}
     </ul>
     <h3>Top results:</h3>
     <ul>
-    {% for link in links %}
+        {% for link in links %}
         <li><a href="{{link.url}}">{{ link.url }}</a></li>
-    {% endfor %}
+        {% endfor %}
     </ul>
 </div>
 {% else %}
-    <p>No results are available.</p>
+<p>No results are available.</p>
 {% endif %}
