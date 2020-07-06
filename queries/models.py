@@ -45,6 +45,11 @@ class QueryResult(models.Model):
 
     objects = QueryResultManager()
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['user_ip', 'user_browser', 'phrase']),
+        ]
+
 
 class Link(models.Model):
     query_result = models.ForeignKey(QueryResult, on_delete=models.CASCADE)
