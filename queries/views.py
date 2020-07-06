@@ -1,11 +1,17 @@
-from django.shortcuts import render
+import json
 
-from . import forms
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views.decorators.http import require_http_methods
+from rest_framework import status
+
+from . import forms, utils
 from . import models
 
 TEMPLATE_FILENAME = 'index.html'
 
 
+@require_http_methods(["GET", "POST"])
 def index(request):
     if request.method == 'POST':
         form = forms.QueryForm(request.POST)
@@ -24,3 +30,12 @@ def index(request):
             return render(request, TEMPLATE_FILENAME, context)
 
     return render(request, TEMPLATE_FILENAME, {'form': forms.QueryForm()})
+
+
+@require_http_methods(["GET"])
+def proxy(request, phrase):
+    if request.method == 'GET':
+        data = utils.get_response_from_google(phrase)
+        return HttpResponse(json.dumps(data))
+
+    return HttpResponse("Please provide 'phrase' parameter", status=status.HTTP_400_BAD_REQUEST)

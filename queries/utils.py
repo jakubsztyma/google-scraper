@@ -13,10 +13,10 @@ class GoogleResult:
     popular_words: list
 
 
-def _get_response_from_google(phrase: str):
+def get_response_from_google(phrase: str):
     """Get response from google search in form of python native objects"""
-    response = requests.get(settings.SEARCH_URL.format(settings.GOOGLE_KEY, phrase))
-    return json.loads(response.content)
+    response = requests.get(settings.SEARCH_URL.format(phrase=phrase))
+    return response.json()
 
 
 def _get_words(items):
@@ -29,8 +29,8 @@ def _get_words(items):
     return Counter(words).most_common(10)
 
 
-def get_response_from_google(phrase: str) -> GoogleResult:
-    json_result = _get_response_from_google(phrase)
+def get_data_from_google(phrase: str) -> GoogleResult:
+    json_result = get_response_from_google(phrase)
     return GoogleResult(
         result_count=int(json_result['searchInformation']['totalResults']),
         urls=(item.get('link', '') for item in json_result['items']),

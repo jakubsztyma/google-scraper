@@ -17,7 +17,7 @@ class QueryResultManager(models.Manager):
         ).first()
 
         if result is None:
-            response = utils.get_response_from_google(phrase)
+            response = utils.get_data_from_google(phrase)
 
             result = self.create(
                 user_ip=user_ip,

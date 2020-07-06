@@ -12,7 +12,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
-GOOGLE_KEY = os.environ.get('GOOGLE_KEY')
 DEBUG = os.environ.get('DEBUG')
 ALLOWED_HOSTS = list(filter(lambda s: len(s) > 0, map(str.strip, os.environ.get('ALLOWED_HOSTS', '').split(','))))
 
@@ -150,4 +149,4 @@ SWAGGER_SETTINGS = {
 HASHID_FIELD_SALT = '9q#3t$5gs9ob682b@(6^fdv2kg*0ztr(3doa((w&kyq!d8rbt^'
 
 QUERY_RESULT_LIFE_TIME = timedelta(seconds=int(os.environ.get('QUERY_RESULT_LIFE_TIME_SECONDS')))
-SEARCH_URL = os.environ.get('SEARCH_URL')
+SEARCH_URL = os.environ.get('SEARCH_URL').format(key=os.environ.get('GOOGLE_KEY'))

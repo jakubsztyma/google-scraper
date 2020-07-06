@@ -23,7 +23,7 @@ def api_client():
 
 @pytest.fixture
 def get_response_from_google(mocker):
-    return mocker.patch('queries.utils._get_response_from_google',
+    return mocker.patch('queries.utils.get_response_from_google',
                         return_value=GOOGLE_SAMPLE_RESPONSE)
 
 
