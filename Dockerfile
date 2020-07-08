@@ -9,7 +9,6 @@ RUN apk update \
     && apk add postgresql-dev \
     && apk add build-base linux-headers pcre-dev
 
-EXPOSE 3031
 WORKDIR /app
 COPY Pipfile Pipfile.lock ./
 RUN pip install --upgrade pip
