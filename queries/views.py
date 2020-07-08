@@ -2,8 +2,8 @@ import json
 
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.decorators.http import require_http_methods
 from rest_framework import status
+from rest_framework.decorators import api_view
 
 from . import forms, utils
 from . import models
@@ -11,8 +11,14 @@ from . import models
 TEMPLATE_FILENAME = 'index.html'
 
 
-@require_http_methods(["GET", "POST"])
+@api_view(["GET", "POST"])
 def index(request):
+    """Get data from google search.
+    get:
+    Display the form with query input.
+    post:
+    Get data from google or database.
+    If data is downloaded from google, save it to the database."""
     if request.method == 'POST':
         form = forms.QueryForm(request.POST)
         if form.is_valid():
@@ -32,8 +38,9 @@ def index(request):
     return render(request, TEMPLATE_FILENAME, {'form': forms.QueryForm()})
 
 
-@require_http_methods(["GET"])
+@api_view(["GET"])
 def proxy(request, phrase):
+    """Proxy the query to google search."""
     if request.method == 'GET':
         data = utils.get_response_from_google(phrase)
         return HttpResponse(json.dumps(data))
